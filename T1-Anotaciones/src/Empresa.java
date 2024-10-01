@@ -24,18 +24,36 @@ public class Empresa {
         EmpleadoNota[] empleadosAnotados = claseEmpresa.getAnnotationsByType(EmpleadoNota.class);
 
         // Ahora recorremos el array para procesar todas las anotaciones que teníamos puestas.
-        for (EmpleadoNota empleadoNota : empleadosAnotados) {
-            String clase = empleadoNota.clase();
+        for (EmpleadoNota e : empleadosAnotados) {
+            String clase = e.clase();
             Empleado empleado = null; // Si no lo inicializamos como null, nos dará error.
+
+            switch (clase) { // Diferenciamos por el atributo clase de cada empleado, no clase de .java
+                case "Directivo":
+                    empleado = new Directivo(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoDespacho());
+                    break;
+                case "Tecnico":
+                    empleado = new Tecnico(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoTaller(), e.perfil());
+                    break;
+                case "Oficial":
+                    empleado = new Oficial(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoTaller(), e.categoria());
+                    break;
+                default:
+                    System.out.println("Clase no reconocida: " + clase);
+            }
+
+            if (empleado != null) { // Esto sirve para
+                empresa.listaEmpleados.add(empleado);
+            }
         }
+        return empresa;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Empresa: \n");
-        sb.append("Nombre: " + nombre + "\n");
-        sb.append("Lista de empleados: " + listaEmpleados + "\n");
-        return sb.toString();
+        return "Empresa{" +
+                "Empleados: \n" + listaEmpleados.toString() +
+                "\n Nombre Empresa: " + nombre +
+                "}";
     }
 }
