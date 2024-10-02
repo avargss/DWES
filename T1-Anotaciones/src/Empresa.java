@@ -30,13 +30,13 @@ public class Empresa {
 
             switch (clase) { // Diferenciamos por el atributo clase de cada empleado, no clase de .java
                 case "Directivo":
-                    empleado = new Directivo(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.clase(), e.codigoDespacho());
+                    empleado = new Directivo(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoDespacho());
                     break;
                 case "Tecnico":
-                    empleado = new Tecnico(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.clase(), e.codigoTaller(), e.perfil());
+                    empleado = new Tecnico(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoTaller(), e.perfil());
                     break;
                 case "Oficial":
-                    empleado = new Oficial(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.clase(), e.codigoTaller(), e.categoria());
+                    empleado = new Oficial(e.nombre(), e.apellido(), e.direccion(), e.telefono(), e.dni(), e.codigoTaller(), e.categoria());
                     break;
                 default:
                     System.out.println("Clase no reconocida: " + clase);
