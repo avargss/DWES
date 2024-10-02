@@ -1,8 +1,8 @@
 public class Operario extends Empleado {
     private int codigoTaller;
 
-    public Operario(String nombre, String apellido, String direccion, String telefono, String dni, int codigoTaller) {
-        super(nombre, apellido, direccion, telefono, dni);
+    public Operario(String nombre, String apellido, String direccion, String telefono, String dni, String clase, int codigoTaller) {
+        super(nombre, apellido, direccion, telefono, dni, clase);
         this.codigoTaller = codigoTaller;
     }
 

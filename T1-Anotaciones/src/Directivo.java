@@ -1,8 +1,8 @@
 public class Directivo extends Empleado {
     private int codigoDespacho;
 
-    public Directivo(String nombre, String apellido, String direccion, String telefono, String dni, int codigoDespacho) {
-        super(nombre, apellido, direccion, telefono, dni);
+    public Directivo(String nombre, String apellido, String direccion, String telefono, String dni, String clase, int codigoDespacho) {
+        super(nombre, apellido, direccion, telefono, dni, clase);
         this.codigoDespacho = codigoDespacho;
     }
 
