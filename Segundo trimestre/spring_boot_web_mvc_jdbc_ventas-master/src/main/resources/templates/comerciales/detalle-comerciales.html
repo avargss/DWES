@@ -1,0 +1,111 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Comercial</title>
+    <style>
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;">
+    <div class="clearfix">
+        <div style="float: left; width: 50%">
+            <h1>Detalle Comercial</h1>
+        </div>
+        <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
+
+            <div style="position: absolute; left: 39%; top : 39%;">
+
+                <form action="/comerciales">
+                    <input type="submit" value="Volver"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <hr/>
+    </div>
+
+    <div style="margin-top: 6px;" class="clearfix">
+        <div style="float: left;width: 50%">
+            <label>Nombre</label>
+        </div>
+        <div style="float: none;width: auto;overflow: hidden;">
+            <input th:value="${comercial.nombre}" value="Código" readonly="readonly"/>
+        </div>
+    </div>
+    <div style="margin-top: 6px;" class="clearfix">
+        <div style="float: left;width: 50%">
+            <label>Apellido 1</label>
+        </div>
+        <div style="float: none;width: auto;overflow: hidden;">
+            <input th:value="${comercial.apellido1}" value="Código" readonly="readonly"/>
+        </div>
+    </div>
+    <div style="margin-top: 6px;" class="clearfix">
+        <div style="float: left;width: 50%">
+            <label>Apellido 2</label>
+        </div>
+        <div style="float: none;width: auto;overflow: hidden;">
+            <input th:value="${comercial.apellido2}" value="Código" readonly="readonly"/>
+        </div>
+    </div>
+    <div style="margin-top: 6px;" class="clearfix">
+        <div style="float: left;width: 50%">
+            <label>Ciudad</label>
+        </div>
+        <div style="float: none;width: auto;overflow: hidden;">
+            <input th:value="${comercial.comision}" value="Código" readonly="readonly"/>
+        </div>
+    </div>
+
+</div>
+
+<div id="contenedor" style="float:none; margin: 0 auto;width: 900px;">
+    <div class="clearfix">
+        <div style="float: left; width: 50%">
+            <h4 th:text="${pedido}"></h4>
+        </div>
+    </div>
+    <div class="clearfix">
+        <hr/>
+    </div>
+    <div class="clearfix">
+        <div style="float: left;width: 25%">Id</div>
+        <div style="float: left;width: 25%" th:text="Total"></div>
+        <div style="float: left;width: 25%" th:text="Fecha"></div>
+        <div style="float: left;width: 25%" th:text="Cliente"></div>
+    </div>
+    <div class="clearfix">
+        <hr/>
+    </div>
+
+    <div th:each="pedidoDTO : ${pedidosDTO}" style="margin-top: 6px;" class="clearfix">
+        <div style="float: left;width: 25%" th:text="${pedidoDTO.id}">0</div>
+        <div style="float: left;width: 25%" th:text="${pedidoDTO.total} + ' €'">total</div>
+        <div style="float: left;width: 25%" th:text="${pedidoDTO.fecha}">fecha</div>
+        <div style="float: left;width: 25%">
+            <a th:href="@{/clientes/__${pedidoDTO.id_cliente}__}"
+               th:text="${pedidoDTO.getNombre_cliente()}">
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Total de pedidos: <span class="fw-bold text-success"><th:block th:text="${totalPedidos}"/></span></h1>
+        <h2>Media de pedidos del comercial: <span class="fw-bold text-success"><th:block th:text="${media}"/></span></h2>
+    </div>
+
+</div>
+
+</body>
+</html>
