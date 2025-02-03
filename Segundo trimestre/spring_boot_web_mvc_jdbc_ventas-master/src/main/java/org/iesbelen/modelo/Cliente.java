@@ -21,16 +21,16 @@ public class Cliente {
     private long id;
 
     @NotBlank(message = "{error.nombre}")
-    @Size(max =30, message = "{error.nombre.size.max}")
+    @Size(max = 30, message = "{error.nombre.size.max}")
     private String nombre;
 
     @NotBlank(message = "{error.apellido}")
-    @Size(max =30, message = "{error.apellido.size.max}")
+    @Size(max = 30, message = "{error.apellido.size.max}")
     private String apellido1;
     private String apellido2;
 
     @NotBlank(message = "{error.ciudad}")
-    @Size(max =50, message = "{error.ciudad.size.max}")
+    @Size(max = 50, message = "{error.ciudad.size.max}")
     private String ciudad;
 
     @Min(value = 100, message = "{error.min.categoria}")

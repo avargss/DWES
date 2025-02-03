@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Comerciales</title>
+    <title th:text="#{comerciales.titulo}">Comerciales</title>
     <style>
         .clearfix::after {
             content: "";
@@ -17,7 +17,7 @@
 <div id="contenedora" style="float:none; margin: 0 auto;width: 95%;">
     <div class="clearfix">
         <div style="float: left; width: 50%">
-            <h1>Comerciales</h1>
+            <h1 th:text="#{comerciales.titulo}">Comerciales</h1>
         </div>
         <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
 
@@ -29,7 +29,7 @@
 
             <div style="position: absolute; left: 39%; top : 39%;">
                 <form action="/comerciales/crear">
-                    <input type="submit" value="Crear">
+                    <input type="submit" th:value="#{comerciales.accion.nuevo}" value="Crear">
                 </form>
             </div>
 
@@ -39,32 +39,32 @@
         <hr/>
     </div>
     <div class="clearfix">
-        <div style="float: left;width: 17%">Id</div>
-        <div style="float: left;width: 17%">Nombre</div>
-        <div style="float: left;width: 17%">Apellido1</div>
-        <div style="float: left;width: 17%">Apellido2</div>
-        <div style="float: left;width: 17%">Comision</div>
-        <div style="float: none;width: auto;overflow: hidden;">Acción</div>
+        <div style="float: left;width: 8%" th:text="#{comerciales.tabla.id}">Id</div>
+        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.nombre}">Nombre</div>
+        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.apellido1}">Apellido1</div>
+        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.apellido2}">Apellido2</div>
+        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.comision}">Comision</div>
+        <div style="float: none;width: auto;overflow: hidden;" th:text="#{comerciales.tabla.accion}">Acción</div>
     </div>
     <div class="clearfix">
         <hr/>
     </div>
 
     <div th:each="comercial : ${listaComerciales}" style="margin-top: 6px;" class="clearfix">
-        <div style="float: left;width: 17%" th:text="${comercial.id}">0</div>
+        <div style="float: left;width: 8%" th:text="${comercial.id}">0</div>
         <div style="float: left;width: 17%" th:text="${comercial.nombre}">nombre</div>
         <div style="float: left;width: 17%" th:text="${comercial.apellido1}">apellido1</div>
         <div style="float: left;width: 17%" th:text="${comercial.apellido2 ?: '&nbsp;'}">apellido2</div>
         <div style="float: left;width: 17%" th:text="${comercial.comision}">comision</div>
         <div style="float: none;width: auto;overflow: hidden;">
             <form th:action="@{/comerciales/__${comercial.id}__}" style="display: inline;">
-                <input type="submit" value="Ver Detalle"/>
+                <input type="submit" th:value="#{comerciales.accion.detalle}" value="Ver Detalle"/>
             </form>
             <form th:action="@{/comerciales/editar/__${comercial.id}__} " style="display: inline;">
-                <input type="submit" value="Editar"/>
+                <input type="submit" th:value="#{comerciales.accion.editar}" value="Editar"/>
             </form>
             <form th:action="@{/comerciales/borrar/__${comercial.id}__}" method="post" style="display: inline;">
-                <input type="submit" value="Eliminar"/>
+                <input type="submit" th:value="#{comerciales.accion.eliminar}" value="Eliminar"/>
             </form>
         </div>
     </div>
