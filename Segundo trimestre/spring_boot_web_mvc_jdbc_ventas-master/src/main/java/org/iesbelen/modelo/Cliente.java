@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.iesbelen.validador.RangoCategoria;
+import org.iesbelen.validador.RangoCategoriaPlus;
 
 //La anotación @Data de lombok proporcionará el código de:
 //getters/setters, toString, equals y hashCode
@@ -40,6 +42,8 @@ public class Cliente {
     @NotNull(message = "{error.notNull}")
     @Min(value = 100, message = "{error.min.categoria}")
     @Max(value = 1000, message = "{error.max.categoria}")
+    // @RangoCategoria
+    @RangoCategoriaPlus({100, 200, 300, 400, 500, 600, 700, 800, 900, 1000})
     private Integer categoria;
 
     public Cliente() {
