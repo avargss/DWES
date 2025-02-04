@@ -38,7 +38,7 @@ public class ComercialDAOImpl implements ComercialDAO {
                         rs.getString("nombre"),
                         rs.getString("apellido1"),
                         rs.getString("apellido2"),
-                        rs.getFloat("comisión"))
+                        rs.getBigDecimal("comisión"))
 
         );
 
@@ -56,7 +56,7 @@ public class ComercialDAOImpl implements ComercialDAO {
                                 rs.getString("nombre"),
                                 rs.getString("apellido1"),
                                 rs.getString("apellido2"),
-                                rs.getFloat("comisión"))
+                                rs.getBigDecimal("comisión"))
                         , id
                 );
 

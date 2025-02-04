@@ -80,7 +80,7 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes/editar/{id}")
-    public String submitEditar(@ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model) {
+    public String submitEditar(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("cliente", cliente);
             return "clientes/editar-cliente";

@@ -27,7 +27,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     @Override
     public synchronized void create(Cliente cliente) {
 
-        jdbcTemplate.update("INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría) VALUES (?, ?, ?, ?, ?)", cliente.getNombre(), cliente.getApellido1(), cliente.getApellido2(), cliente.getCiudad(), cliente.getCategoria());
+        jdbcTemplate.update("INSERT INTO cliente (nombre, apellido1, apellido2, correoElectronico, ciudad, categoría) VALUES (?, ?, ?, ?, ?, ?)", cliente.getNombre(), cliente.getApellido1(), cliente.getApellido2(), cliente.getCiudad(), cliente.getCategoria());
     }
 
     /**
@@ -42,6 +42,7 @@ public class ClienteDAOImpl implements ClienteDAO {
                         rs.getString("nombre"),
                         rs.getString("apellido1"),
                         rs.getString("apellido2"),
+                        rs.getString("correoElectronico"),
                         rs.getString("ciudad"),
                         rs.getInt("categoría")
                 )
@@ -64,6 +65,7 @@ public class ClienteDAOImpl implements ClienteDAO {
                                 rs.getString("nombre"),
                                 rs.getString("apellido1"),
                                 rs.getString("apellido2"),
+                                rs.getString("correoElectronico"),
                                 rs.getString("ciudad"),
                                 rs.getInt("categoría"))
                         , id
@@ -88,12 +90,14 @@ public class ClienteDAOImpl implements ClienteDAO {
                         				nombre = ?, 
                         				apellido1 = ?, 
                         				apellido2 = ?,
+                        				correoElectronico = ?,
                         				ciudad = ?,
                         				categoría = ?  
                         		WHERE id = ?
                         """, cliente.getNombre()
                 , cliente.getApellido1()
                 , cliente.getApellido2()
+                , cliente.getCorreoElectronico()
                 , cliente.getCiudad()
                 , cliente.getCategoria()
                 , cliente.getId());

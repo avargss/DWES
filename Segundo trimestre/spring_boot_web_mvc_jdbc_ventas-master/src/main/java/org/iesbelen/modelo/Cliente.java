@@ -29,13 +29,18 @@ public class Cliente {
     private String apellido1;
     private String apellido2;
 
+    @Email(regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}", message = "Formato de email incorrecto")
+    @NotBlank(message = "{error.email}")
+    private String correoElectronico;
+
     @NotBlank(message = "{error.ciudad}")
     @Size(max = 50, message = "{error.ciudad.size.max}")
     private String ciudad;
 
+    @NotNull(message = "{error.notNull}")
     @Min(value = 100, message = "{error.min.categoria}")
     @Max(value = 1000, message = "{error.max.categoria}")
-    private int categoria;
+    private Integer categoria;
 
     public Cliente() {
 
