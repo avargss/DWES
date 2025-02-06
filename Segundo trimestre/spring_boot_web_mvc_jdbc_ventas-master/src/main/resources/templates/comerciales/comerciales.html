@@ -3,77 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{comerciales.titulo}">Comerciales</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .clearfix::after {
             content: "";
             display: block;
             clear: both;
         }
-
     </style>
 </head>
 <body>
-
-<div id="contenedora" style="float:none; margin: 0 auto;width: 95%;">
-    <div class="clearfix">
-        <div style="float: left; width: 50%">
+<div class="container my-4">
+    <!-- Encabezado y botones de navegación -->
+    <div class="row align-items-center mb-3">
+        <div class="col-md-6">
             <h1 th:text="#{comerciales.titulo}">Comerciales</h1>
         </div>
-        <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
 
-            <div style="position: absolute; top : 40%;">
-                <form action="/" style="display: inline;">
-                    <input type="submit" th:value="#{inicio}"/>
+        <div class="col-md-6 text-end">
+            <div class="d-flex gap-3 justify-content-center mb-3">
+                <form action="/" class="d-inline">
+                    <button type="submit" class="btn btn-primary" th:text="#{inicio}">Inicio</button>
                 </form>
-            </div>
-
-            <div style="position: absolute; left: 20%; top : 40%;">
-                <form action="/clientes" style="display: inline;">
-                    <input type="submit" th:value="#{clientes.titulo}"/>
+                <form action="/clientes" class="d-inline">
+                    <button type="submit" class="btn btn-secondary" th:text="#{clientes.titulo}">Clientes</button>
                 </form>
-            </div>
-
-            <div style="position: absolute; left: 40%; top : 40%;">
-                <form action="/comerciales/crear">
-                    <input type="submit" th:value="#{comerciales.accion.nuevo}" value="Crear">
+                <form action="/comerciales/crear" class="d-inline">
+                    <button type="submit" class="btn btn-success" th:text="#{comerciales.accion.nuevo}">Crear</button>
                 </form>
             </div>
 
         </div>
     </div>
-    <div class="clearfix">
-        <hr/>
+    <hr>
+    <!-- Encabezado de la tabla -->
+    <div class="row fw-bold">
+        <div class="col-md-1" th:text="#{comerciales.tabla.id}">Id</div>
+        <div class="col-md-2" th:text="#{comerciales.tabla.nombre}">Nombre</div>
+        <div class="col-md-2" th:text="#{comerciales.tabla.apellido1}">Apellido1</div>
+        <div class="col-md-2" th:text="#{comerciales.tabla.apellido2}">Apellido2</div>
+        <div class="col-md-2" th:text="#{comerciales.tabla.comision}">Comisión</div>
+        <div class="col-md-3" th:text="#{comerciales.tabla.accion}">Acción</div>
     </div>
-    <div class="clearfix">
-        <div style="float: left;width: 8%" th:text="#{comerciales.tabla.id}">Id</div>
-        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.nombre}">Nombre</div>
-        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.apellido1}">Apellido1</div>
-        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.apellido2}">Apellido2</div>
-        <div style="float: left;width: 17%" th:text="#{comerciales.tabla.comision}">Comision</div>
-        <div style="float: none;width: auto;overflow: hidden;" th:text="#{comerciales.tabla.accion}">Acción</div>
-    </div>
-    <div class="clearfix">
-        <hr/>
-    </div>
+    <hr>
+    <!-- Iteración de Comerciales -->
+    <div th:each="comercial : ${listaComerciales}" class="row align-items-center mb-2">
+        <div class="col-md-1" th:text="${comercial.id}">0</div>
+        <div class="col-md-2" th:text="${comercial.nombre}">nombre</div>
+        <div class="col-md-2" th:text="${comercial.apellido1}">apellido1</div>
+        <div class="col-md-2" th:text="${comercial.apellido2 ?: '&nbsp;'}">apellido2</div>
+        <div class="col-md-2" th:text="${comercial.comision}">comisión</div>
+        <div class="col-md-3">
+            <div class="d-flex gap-2">
+                <form th:action="@{/comerciales/__${comercial.id}__}" class="d-inline">
+                    <button type="submit" class="btn btn-info" th:text="#{comerciales.accion.detalle}">Ver Detalle</button>
+                </form>
+                <form th:action="@{/comerciales/editar/__${comercial.id}__}" class="d-inline">
+                    <button type="submit" class="btn btn-warning" th:text="#{comerciales.accion.editar}">Editar</button>
+                </form>
+                <form th:action="@{/comerciales/borrar/__${comercial.id}__}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger" th:text="#{comerciales.accion.eliminar}">Eliminar</button>
+                </form>
+            </div>
 
-    <div th:each="comercial : ${listaComerciales}" style="margin-top: 6px;" class="clearfix">
-        <div style="float: left;width: 8%" th:text="${comercial.id}">0</div>
-        <div style="float: left;width: 17%" th:text="${comercial.nombre}">nombre</div>
-        <div style="float: left;width: 17%" th:text="${comercial.apellido1}">apellido1</div>
-        <div style="float: left;width: 17%" th:text="${comercial.apellido2 ?: '&nbsp;'}">apellido2</div>
-        <div style="float: left;width: 17%" th:text="${comercial.comision}">comision</div>
-        <div style="float: none;width: auto;overflow: hidden;">
-            <form th:action="@{/comerciales/__${comercial.id}__}" style="display: inline;">
-                <input type="submit" th:value="#{comerciales.accion.detalle}" value="Ver Detalle"/>
-            </form>
-            <form th:action="@{/comerciales/editar/__${comercial.id}__} " style="display: inline;">
-                <input type="submit" th:value="#{comerciales.accion.editar}" value="Editar"/>
-            </form>
-            <form th:action="@{/comerciales/borrar/__${comercial.id}__}" method="post" style="display: inline;">
-                <input type="submit" th:value="#{comerciales.accion.eliminar}" value="Eliminar"/>
-            </form>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,22 +1,19 @@
 package org.iesbelen.service;
 
 import org.iesbelen.dao.ClienteDAO;
-import org.iesbelen.dao.ComercialDAO;
 import org.iesbelen.dao.PedidoDAO;
 import org.iesbelen.dto.PedidoDTO;
 import org.iesbelen.mapstruct.PedidoMapper;
 import org.iesbelen.modelo.Cliente;
-import org.iesbelen.modelo.Comercial;
 import org.iesbelen.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class PedidoService {
+public class  PedidoService {
 
     @Autowired
     private PedidoDAO pedidoDAO;
@@ -53,14 +50,16 @@ public class PedidoService {
     }
 
     public double mediaPedidos(int total, int particular) {
-
         double media;
 
         System.out.println(particular);
 
         media = (double) total / particular;
-        media = media * 100;
-        return media;
+        // media = media * 100;
 
+        // Redondear a 2 decimales
+        media = Math.round(media * 100.0) / 100.0;
+
+        return media;
     }
 }

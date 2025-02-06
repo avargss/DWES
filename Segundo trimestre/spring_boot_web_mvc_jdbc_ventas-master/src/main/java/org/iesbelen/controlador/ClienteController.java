@@ -41,6 +41,7 @@ public class ClienteController {
         return "clientes/clientes";
     }
 
+    // DETALLE CLIENTE
     @GetMapping("/clientes/{id}")
     public String detalle(Model model, @PathVariable long id) {
 
@@ -50,6 +51,7 @@ public class ClienteController {
         return "clientes/detalle-cliente";
     }
 
+    // GET CREAR CLIENTES
     @GetMapping("/clientes/crear")
     public String crear(Model model) {
 
@@ -59,6 +61,7 @@ public class ClienteController {
         return "clientes/crear-cliente";
     }
 
+    // POST CREAR CLIENTES
     @PostMapping("/clientes/crear")
     public String submitCrear(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -69,7 +72,7 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-
+    // GET EDITAR CLIENTES
     @GetMapping("/clientes/editar/{id}")
     public String editar(Model model, @PathVariable long id) {
 
@@ -79,6 +82,7 @@ public class ClienteController {
         return "clientes/editar-cliente";
     }
 
+    // POST EDITAR CLIENTES
     @PostMapping("/clientes/editar/{id}")
     public String submitEditar(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
         if (result.hasErrors()) {

@@ -52,8 +52,8 @@ public class ComercialController {
         model.addAttribute("comercial", comercial);
         model.addAttribute("pedidosDTO", pedidoDTO);
         model.addAttribute("totalPedidos", total);
-        model.addAttribute("media", media);
-
+        model.addAttribute("mediaPedidos", media);
+        // Los strings que pongo aquí son los
 
         return "comerciales/detalle-comerciales";
     }

@@ -3,95 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{comerciales.accion.editar}">Editar Comercial</title>
-    <style>
-        .clearfix::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
-
-    </style>
+    <!-- Bootstrap CSS desde CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-
-<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;">
+<div class="container my-4">
     <form th:action="@{/comerciales/editar/__${comercial.id}__}" th:object="${comercial}" method="post">
-        <div class="clearfix">
-            <div style="float: left; width: 50%">
+        <!-- Encabezado: Título y botones -->
+        <div class="row align-items-center mb-3">
+            <div class="col-md-6">
                 <h1 th:text="#{comerciales.accion.editar}">Editar Comercial</h1>
             </div>
-            <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
-
-                <div style="position: absolute; left: 20%; top : 39%;">
-                    <button type="submit" th:text="#{comerciales.accion.guardar}">Guardar</button>
+            <div class="col-md-6 text-end">
+                <button type="submit" class="btn btn-primary me-2" th:text="#{comerciales.accion.guardar}">Guardar
+                </button>
+                <a th:href="@{/comerciales}" class="btn btn-secondary"
+                   th:text="#{comerciales.accion.cancelar}">Cancelar</a>
+            </div>
+        </div>
+        <hr>
+        <!-- Campo ID -->
+        <div class="mb-3 row">
+            <label for="id" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-10">
+                <input type="text" id="id" class="form-control" th:field="*{id}" readonly="readonly"/>
+            </div>
+        </div>
+        <!-- Campo Nombre -->
+        <div class="mb-3 row">
+            <label for="nombre" class="col-sm-2 col-form-label" th:text="#{comerciales.form.nombre}">Nombre</label>
+            <div class="col-sm-10">
+                <input type="text" id="nombre" class="form-control" th:field="*{nombre}"/>
+                <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
+                    <div th:each="err : ${#fields.errors('nombre')}" th:text="${err}"></div>
                 </div>
-                <div style="position: absolute; left: 40%; top : 40%;">
-                    <a th:href="@{/comerciales}" th:text="#{comerciales.accion.cancelar}">Cancelar</a>
+            </div>
+        </div>
+        <!-- Campo Apellido 1 -->
+        <div class="mb-3 row">
+            <label for="apellido1" class="col-sm-2 col-form-label" th:text="#{comerciales.form.apellido1}">Apellido
+                1</label>
+            <div class="col-sm-10">
+                <input type="text" id="apellido1" class="form-control" th:field="*{apellido1}"/>
+                <div th:if="${#fields.hasErrors('apellido1')}" class="text-danger">
+                    <div th:each="err : ${#fields.errors('apellido1')}" th:text="${err}"></div>
                 </div>
-
             </div>
         </div>
-
-        <div class="clearfix">
-            <hr/>
-        </div>
-
-
-        <div style="margin-top: 6px;" class="clearfix">
-            <div style="float: left;width: 50%">
-                <label>ID</label>
-            </div>
-            <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{id}" readonly="readonly"/>
+        <!-- Campo Apellido 2 -->
+        <div class="mb-3 row">
+            <label for="apellido2" class="col-sm-2 col-form-label" th:text="#{comerciales.form.apellido2}">Apellido
+                2</label>
+            <div class="col-sm-10">
+                <input type="text" id="apellido2" class="form-control" th:field="*{apellido2}"/>
+                <div th:if="${#fields.hasErrors('apellido2')}" class="text-danger">
+                    <div th:each="err : ${#fields.errors('apellido2')}" th:text="${err}"></div>
+                </div>
             </div>
         </div>
-        <div style="margin-top: 6px;" class="clearfix">
-            <div style="float: left;width: 50%">
-                <label th:text="#{comerciales.form.nombre}">Nombre</label>
-            </div>
-            <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{nombre}"/>
-                <ul th:if="${#fields.hasErrors('nombre')}">
-                    <li th:each="err : ${#fields.errors('nombre')}" th:text="${err}" class="error"/>
-                </ul>
-            </div>
-        </div>
-        <div style="margin-top: 6px;" class="clearfix">
-            <div style="float: left;width: 50%">
-                <label th:text="#{comerciales.form.apellido1}">Apellido 1</label>
-            </div>
-            <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{apellido1}"/>
-                <ul th:if="${#fields.hasErrors('apellido1')}">
-                    <li th:each="err : ${#fields.errors('apellido1')}" th:text="${err}" class="error"/>
-                </ul>
+        <!-- Campo Comisión -->
+        <div class="mb-3 row">
+            <label for="comision" class="col-sm-2 col-form-label"
+                   th:text="#{comerciales.form.comision}">Comisión</label>
+            <div class="col-sm-10">
+                <input type="text" id="comision" class="form-control" th:field="*{comision}"/>
+                <div th:if="${#fields.hasErrors('comision')}" class="text-danger">
+                    <div th:each="err : ${#fields.errors('comision')}" th:text="${err}"></div>
+                </div>
             </div>
         </div>
-        <div style="margin-top: 6px;" class="clearfix">
-            <div style="float: left;width: 50%">
-                <label th:text="#{comerciales.form.apellido2}">Apellido 2</label>
-            </div>
-            <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{apellido2}"/>
-                <ul th:if="${#fields.hasErrors('apellido2')}">
-                    <li th:each="err : ${#fields.errors('apellido2')}" th:text="${err}" class="error"/>
-                </ul>
-            </div>
-        </div>
-        <div style="margin-top: 6px;" class="clearfix">
-            <div style="float: left;width: 50%">
-                <label th:text="#{comerciales.form.comision}">Comisión</label>
-            </div>
-            <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{comision}"/>
-                <ul th:if="${#fields.hasErrors('comision')}">
-                    <li th:each="err : ${#fields.errors('comision')}" th:text="${err}" class="error"/>
-                </ul>
-            </div>
-        </div>
-
     </form>
 </div>
 
+<!-- Bootstrap Bundle JS (incluye Popper) desde CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
