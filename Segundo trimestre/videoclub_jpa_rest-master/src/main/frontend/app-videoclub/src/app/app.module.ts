@@ -5,10 +5,18 @@ import { CategoriaModule } from  './categoria/categoria.module'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PeliculaComponent } from './pelicula/pelicula.component';
+import { IndexComponent } from './pelicula/index/index.component';
+import { CreateComponent } from './pelicula/create/create.component';
+import { EditComponent } from './pelicula/edit/edit.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PeliculaComponent,
+    IndexComponent,
+    CreateComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

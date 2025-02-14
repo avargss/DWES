@@ -4,6 +4,4 @@ export interface Categoria {
 
   nombre: string;
 
-  ultimaActualizacion: string
-
 }

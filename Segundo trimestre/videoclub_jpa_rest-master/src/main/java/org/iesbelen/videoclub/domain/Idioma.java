@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name="idioma")
+@Table(name = "idioma")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

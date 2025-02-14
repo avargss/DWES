@@ -45,4 +45,5 @@ public class Pelicula {
             inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
     Set<Categoria> categorias = new HashSet<>();
 
+
 }

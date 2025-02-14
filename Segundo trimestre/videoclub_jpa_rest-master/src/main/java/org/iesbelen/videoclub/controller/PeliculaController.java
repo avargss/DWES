@@ -19,13 +19,13 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
-    @PostMapping({"","/"})
+    @PostMapping({"", "/"})
     public Pelicula newPelicula(@RequestBody Pelicula pelicula) {
         return this.peliculaService.save(pelicula);
     }
