@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de la Categoria</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Contenedor principal para el detalle del cliente -->
+<div id="contenedora" class="container my-4">
+    <div class="row align-items-center mb-3">
+        <div class="col-md-6">
+            <h1>Detalles de la Categoria</h1>
+        </div>
+        <div class="col-md-6 text-end">
+            <form action="/categorias">
+                <button type="submit" class="btn btn-secondary">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>ID</label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" th:value="${categoria.id_categoria}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Nombre</label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" th:value="${categoria.nombre}" readonly="readonly"/>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container my-4">
+        <h2>
+            <span th:text="#{pelicula.cantidad.total}"></span>
+            <span class="fw-bold text-success" th:text="${totalPeliculas}"></span>
+        </h2>
+        <h2>
+            <span th:text="#{pelicula.media.duracion}"></span>
+            <span class="fw-bold text-success" th:text="${mediaDuracion}"></span>
+        </h2>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
