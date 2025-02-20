@@ -21,4 +21,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PeliculaRoutingModule
   ]
 })
-export class CategoriaModule { }
+export class PeliculaModule { }

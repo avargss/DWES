@@ -16,6 +16,10 @@ public class PeliculaService {
         this.peliculaRepository = peliculaRepository;
     }
 
+    public Pelicula findByDuracionLessThan(int cantidad) {
+        return this.peliculaRepository.findByDuracionLessThan(cantidad);
+    }
+
     public List<Pelicula> all() {
         return this.peliculaRepository.findAll();
     }

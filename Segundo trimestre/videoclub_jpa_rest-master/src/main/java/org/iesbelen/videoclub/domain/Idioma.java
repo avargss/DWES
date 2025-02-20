@@ -3,10 +3,7 @@ package org.iesbelen.videoclub.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -24,9 +21,16 @@ public class Idioma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_idioma")
     private Long id;
+
     private String nombre;
 
     @OneToMany(mappedBy = "idioma")
+    @ToString.Exclude
     @JsonIgnore
     private List<Pelicula> peliculasIdioma;
+
+    @OneToMany(mappedBy = "idiomaOriginal")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Pelicula> peliculasIdiomaOriginal;
 }
