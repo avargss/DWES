@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -19,10 +20,27 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar"})
+    // Mapping que excluye las rutas con params ! (negacion)
     public List<Categoria> all() {
         log.info("Accediendo a todas las categorías");
         return this.categoriaService.all();
+    }
+
+    public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOptional,
+                               @RequestParam("ordenar") Optional<String> ordenarOptional) {
+        log.info("Accediendo a todas las películas con filtro buscar: %s y ordenar: %s",
+                buscarOptional.orElse(""),
+                ordenarOptional.orElse(""));
+
+        return this.categoriaService.allByQueryFilterStream(buscarOptional, ordenarOptional);
+        //return this.categoriaService.allByQueryFiltersMethodQuery(buscarOptional, ordenarOptional);
+        //return this.categoriaService.allByQueryFiltersAnnotationQuery(buscarOptional, ordenarOptional);
+    }
+
+    @GetMapping("/{id}/cantidadPeliculas")
+    public int cantidadPeliculas(@PathVariable Long id) {
+        return this.categoriaService.one(id).getPeliculas().size();
     }
 
     @PostMapping({"", "/"})

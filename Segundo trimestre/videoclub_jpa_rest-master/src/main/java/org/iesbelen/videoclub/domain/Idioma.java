@@ -13,6 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
+// Para que funcione la coleccion de Set<Categoria> en Pelicula
+@EqualsAndHashCode(of = "nombre")
+
 //Si utilizo @OneToMany(FetchType.LAZY) además debo usar
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Idioma {
@@ -25,12 +29,8 @@ public class Idioma {
     private String nombre;
 
     @OneToMany(mappedBy = "idioma")
-    @ToString.Exclude
     @JsonIgnore
     private List<Pelicula> peliculasIdioma;
 
-    @OneToMany(mappedBy = "idiomaOriginal")
-    @JsonIgnore
-    @ToString.Exclude
-    private List<Pelicula> peliculasIdiomaOriginal;
+
 }

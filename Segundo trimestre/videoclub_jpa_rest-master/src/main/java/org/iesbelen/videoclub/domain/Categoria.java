@@ -24,7 +24,7 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private long idCategoria;
+    private long id;
 
     @NaturalId
     private String nombre;
@@ -32,6 +32,6 @@ public class Categoria {
     @ManyToMany(
             mappedBy = "categorias")
     @ToString.Exclude
-    @JsonIgnore
+    // @JsonIgnore
     Set<Pelicula> peliculas = new HashSet<>();
 }

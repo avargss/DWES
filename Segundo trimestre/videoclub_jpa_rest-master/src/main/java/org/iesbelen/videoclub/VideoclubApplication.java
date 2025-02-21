@@ -10,4 +10,6 @@ public class VideoclubApplication {
         SpringApplication.run(VideoclubApplication.class, args);
     }
 
+
+
 }

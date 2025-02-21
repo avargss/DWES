@@ -3,6 +3,7 @@ package org.iesbelen.videoclub.service;
 import org.iesbelen.videoclub.exception.PeliculaNotFoundException;
 import org.iesbelen.videoclub.repository.PeliculaRepository;
 import org.iesbelen.videoclub.domain.Pelicula;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 @Service
 public class PeliculaService {
 
-    private final PeliculaRepository peliculaRepository;
+    @Autowired
+    private PeliculaRepository peliculaRepository;
 
     public PeliculaService(PeliculaRepository peliculaRepository) {
         this.peliculaRepository = peliculaRepository;
@@ -47,6 +49,10 @@ public class PeliculaService {
                     return p;
                 })
                 .orElseThrow(() -> new PeliculaNotFoundException(id));
+    }
+
+    private Pelicula peliculasDuracionMenorCantidad (int cantidad) {
+        return this.peliculaRepository.findByDuracionLessThan(cantidad);
     }
 
 }

@@ -37,6 +37,8 @@ public class Socio {
     })
     private Set<Address> addresses = new HashSet<>();
 
+    private Address address;
+
     @ElementCollection
     @CollectionTable(name = "socio_phone_numbers", joinColumns = @JoinColumn(name = "socio_id"))
     @Column(name = "phone_number")
