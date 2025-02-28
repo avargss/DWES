@@ -30,8 +30,8 @@ public class CategoriaController {
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOptional,
                                @RequestParam("ordenar") Optional<String> ordenarOptional) {
         log.info("Accediendo a todas las películas con filtro buscar: %s y ordenar: %s",
-                buscarOptional.orElse(""),
-                ordenarOptional.orElse(""));
+                buscarOptional.orElse("Void"),
+                ordenarOptional.orElse("Void"));
 
         return this.categoriaService.allByQueryFilterStream(buscarOptional, ordenarOptional);
         //return this.categoriaService.allByQueryFiltersMethodQuery(buscarOptional, ordenarOptional);

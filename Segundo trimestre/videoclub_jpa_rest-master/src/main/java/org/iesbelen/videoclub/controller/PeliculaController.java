@@ -3,6 +3,7 @@ package org.iesbelen.videoclub.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.videoclub.domain.Categoria;
 import org.iesbelen.videoclub.domain.Pelicula;
+import org.iesbelen.videoclub.repository.CategoriaCustomRepositoryJQLImpl;
 import org.iesbelen.videoclub.service.CategoriaService;
 import org.iesbelen.videoclub.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class PeliculaController {
 
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private CategoriaCustomRepositoryJQLImpl categoriaCustomRepositoryJQLImpl;
 
     public PeliculaController(PeliculaService peliculaService) {
         this.peliculaService = peliculaService;
@@ -38,13 +41,18 @@ public class PeliculaController {
         return this.peliculaService.save(pelicula);
     }
 
-    public void addCategoriaToPelicula(@PathVariable long id, @PathVariable long id_categoria) {
+    @PostMapping("/{id}/add/{id_categoria}")
+    public void addCategoriaToPelicula(@PathVariable("id") long id, @PathVariable("id_categoria") long id_categoria) {
 
         Categoria categoriaEncontrada = categoriaService.one(id_categoria); // Me encuentra la categoria
         Pelicula peliculaEncontrada = peliculaService.one(id); // Me encuentra la pelicula
 
         peliculaEncontrada.getCategorias().add(categoriaEncontrada); // Añado la categoria a la pelicula
-        this.peliculaService.replace(id, peliculaService.one(id)); // Reemplazo la que tenía guardada por la nueva
+        categoriaEncontrada.getPeliculas().add(peliculaEncontrada);
+
+        this.peliculaService.replace(id, peliculaEncontrada);
+        this.categoriaService.replace(id_categoria, categoriaEncontrada);
+         // Reemplazo la que tenía guardada por la nueva
 
     }
 
