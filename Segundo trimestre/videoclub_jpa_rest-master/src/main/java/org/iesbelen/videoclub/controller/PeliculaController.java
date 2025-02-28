@@ -23,8 +23,6 @@ public class PeliculaController {
 
     @Autowired
     private CategoriaService categoriaService;
-    @Autowired
-    private CategoriaCustomRepositoryJQLImpl categoriaCustomRepositoryJQLImpl;
 
     public PeliculaController(PeliculaService peliculaService) {
         this.peliculaService = peliculaService;
@@ -44,15 +42,14 @@ public class PeliculaController {
     @PostMapping("/{id}/add/{id_categoria}")
     public void addCategoriaToPelicula(@PathVariable("id") long id, @PathVariable("id_categoria") long id_categoria) {
 
-        Categoria categoriaEncontrada = categoriaService.one(id_categoria); // Me encuentra la categoria
-        Pelicula peliculaEncontrada = peliculaService.one(id); // Me encuentra la pelicula
+        Categoria categoriaNueva = categoriaService.one(id_categoria); // Me encuentra la categoria
+        Pelicula pelicula = peliculaService.one(id); // Me encuentra la pelicula
 
-        peliculaEncontrada.getCategorias().add(categoriaEncontrada); // Añado la categoria a la pelicula
-        categoriaEncontrada.getPeliculas().add(peliculaEncontrada);
+        pelicula.getCategorias().add(categoriaNueva); // Añado la categoria a la pelicula
+        categoriaNueva.getPeliculas().add(pelicula);
 
-        this.peliculaService.replace(id, peliculaEncontrada);
-        this.categoriaService.replace(id_categoria, categoriaEncontrada);
-         // Reemplazo la que tenía guardada por la nueva
+        this.peliculaService.replace(id, pelicula);
+        this.categoriaService.replace(id_categoria, categoriaNueva);
 
     }
 

@@ -15,23 +15,23 @@ public class CategoriaCustomRepositoryJQLImpl implements CategoriaCustomReposito
     @Autowired
     private EntityManager em;
 
-
     @Override
     public List<Categoria> queryCustomCategoria(Optional<String> buscarOptional, Optional<String> ordenarOptional) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT c FROM Categoria c");
+        StringBuilder queryBuilder = new StringBuilder("SELECT C FROM Categoria C");
 
         if (buscarOptional.isPresent()) {
-            queryBuilder.append(" WHERE c.nombre LIKE :nombre");
+            queryBuilder.append(" ").append(" WHERE C.nombre LIKE :nombre");
         }
 
         if (ordenarOptional.isPresent()) {
-            if ("asc".equalsIgnoreCase(ordenarOptional.get())) {
+            if (buscarOptional.isPresent() && "asc".equalsIgnoreCase(buscarOptional.get())) {
                 queryBuilder.append(" ").append("ORDER BY C.nombre ASC");
-            } else if ("desc".equalsIgnoreCase(ordenarOptional.get())) {
+            } else if (buscarOptional.isPresent() && "desc".equalsIgnoreCase(buscarOptional.get())) {
                 queryBuilder.append(" ").append("ORDER BY C.nombre DESC");
             }
         }
 
+        // Esto es una consulta JPQL, es decir, tiene sintaxis de SQL pero es con Entidades de JPA
         Query query = em.createQuery(queryBuilder.toString());
 
         if (buscarOptional.isPresent()) {
@@ -39,12 +39,5 @@ public class CategoriaCustomRepositoryJQLImpl implements CategoriaCustomReposito
         }
         return query.getResultList();
     }
-
-    /* @project Necesito implementar un método
-    en mi proyecto que me permita buscar
-    categorias por el nombre y ordenarlas de
-    forma ascendente o descendente. Ayudame a
-    hacerlo y explicame paso a paso qué pasos
-    debo seguir para conseguirlo */
 
 }

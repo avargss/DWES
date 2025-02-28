@@ -27,6 +27,7 @@ public class CategoriaController {
         return this.categoriaService.all();
     }
 
+    @GetMapping(value = {"", "/"})
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOptional,
                                @RequestParam("ordenar") Optional<String> ordenarOptional) {
         log.info("Accediendo a todas las películas con filtro buscar: %s y ordenar: %s",

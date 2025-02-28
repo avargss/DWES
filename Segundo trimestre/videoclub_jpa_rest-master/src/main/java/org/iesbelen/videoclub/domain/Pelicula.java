@@ -41,11 +41,11 @@ public class Pelicula {
 
     private int duracion;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "pelicula_categoria",
             joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
             inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
     //Una de las dos entidades tiene que tener el jsonignore para que no se vea bucle, si no es esta debe ser Pelicula
-    Set<Categoria> categorias;
+    Set<Categoria> categorias = new HashSet<>();
 }
