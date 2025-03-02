@@ -40,16 +40,18 @@ public class PeliculaController {
             @RequestParam(value = "pagina", defaultValue = "0") int pagina,
             @RequestParam(value = "tamanio", defaultValue = "0") int tamanio) {
 
-        Map<String, Object> response = this.peliculaService.all(pagina, tamanio);
-        return ResponseEntity.ok(response);
+        log.info("Accediendo a todas las peliculas con paginación");
+
+        Map<String, Object> responseAll = this.peliculaService.all(pagina, tamanio);
+        return ResponseEntity.ok(responseAll);
     }
 
     @GetMapping(value = {"", "/"}, params = {"orden"})
     public ResponseEntity<List<Pelicula>> obtenerPeliculas(
-            @RequestParam(required = false) String orden) {
+            @RequestParam(required = false) String[] orden) {
 
         // Si no se pasa ningún parámetro 'orden', el valor será null
-        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrden(orden);
+        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrdenYPaginado(orden);
         return ResponseEntity.ok(peliculas);
     }
 
