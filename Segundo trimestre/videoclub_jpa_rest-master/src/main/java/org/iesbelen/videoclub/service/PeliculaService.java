@@ -1,12 +1,18 @@
 package org.iesbelen.videoclub.service;
 
+import org.iesbelen.videoclub.domain.Pelicula;
 import org.iesbelen.videoclub.exception.PeliculaNotFoundException;
 import org.iesbelen.videoclub.repository.PeliculaRepository;
-import org.iesbelen.videoclub.domain.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PeliculaService {
@@ -51,8 +57,40 @@ public class PeliculaService {
                 .orElseThrow(() -> new PeliculaNotFoundException(id));
     }
 
-    private Pelicula peliculasDuracionMenorCantidad (int cantidad) {
-        return this.peliculaRepository.findByDuracionLessThan(cantidad);
+    public Map<String, Object> all(int pagina, int tamanio) {
+
+        Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("idPelicula").ascending());
+
+        Page<Pelicula> pageAll = this.peliculaRepository.findAll(paginado);
+
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("peliculas", pageAll.getContent());
+        response.put("currentPage", pageAll.getNumber());
+        response.put("totalItems", pageAll.getTotalElements());
+        response.put("totalPages", pageAll.getTotalPages());
+
+        return response;
+    }
+
+    public List<Pelicula> obtenerPeliculaConOrden(String orden) {
+        Sort sort = Sort.unsorted();
+
+        if (orden != null && !orden.isEmpty()) {
+            // Divide el parámetro 'orden' en columna y dirección
+            String[] partes = orden.split(",");
+            if (partes.length == 2) {
+                String columna = partes[0];
+                String sentido = partes[1];
+                Sort.Order order = (sentido.equalsIgnoreCase("desc"))
+                        ? Sort.Order.desc(columna)
+                        : Sort.Order.asc(columna);
+                sort = Sort.by(order);
+            }
+        }
+
+        return peliculaRepository.findAll(sort);
+
     }
 
 }

@@ -3,14 +3,15 @@ package org.iesbelen.videoclub.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.videoclub.domain.Categoria;
 import org.iesbelen.videoclub.domain.Pelicula;
-import org.iesbelen.videoclub.repository.CategoriaCustomRepositoryJQLImpl;
 import org.iesbelen.videoclub.service.CategoriaService;
 import org.iesbelen.videoclub.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -28,10 +29,28 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio", "!orden", "!paginado"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
+    }
+
+    @GetMapping(value = {"", "/"}, params = {"pagina", "tamanio"})
+    public ResponseEntity<Map<String, Object>> all(
+            @RequestParam(value = "pagina", defaultValue = "0") int pagina,
+            @RequestParam(value = "tamanio", defaultValue = "0") int tamanio) {
+
+        Map<String, Object> response = this.peliculaService.all(pagina, tamanio);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = {"", "/"}, params = {"orden"})
+    public ResponseEntity<List<Pelicula>> obtenerPeliculas(
+            @RequestParam(required = false) String orden) {
+
+        // Si no se pasa ningún parámetro 'orden', el valor será null
+        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrden(orden);
+        return ResponseEntity.ok(peliculas);
     }
 
     @PostMapping({"", "/"})
@@ -63,13 +82,11 @@ public class PeliculaController {
         return this.peliculaService.replace(id, pelicula);
     }
 
-
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deletePelicula(@PathVariable("id") Long id) {
         this.peliculaService.delete(id);
     }
-
 
 }
