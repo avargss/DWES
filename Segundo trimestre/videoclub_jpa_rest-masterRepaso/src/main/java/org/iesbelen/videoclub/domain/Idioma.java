@@ -26,17 +26,10 @@ public class Idioma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_idioma")
     private Long id;
-    private String nombre;
 
-    @Column(name = "ultima_actualizacion")
-    @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
-    private Date ultimaActualizacion;
+    private String nombre;
 
     @OneToMany(mappedBy = "idioma")
     @JsonIgnore
     private List<Pelicula> peliculasIdioma;
-
-    @OneToMany(mappedBy = "idiomaOriginal")
-    @JsonIgnore
-    private List<Pelicula> peliculasIdiomaOriginal;
 }

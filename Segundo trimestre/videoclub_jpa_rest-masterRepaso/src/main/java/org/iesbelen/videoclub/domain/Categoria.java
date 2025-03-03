@@ -26,14 +26,13 @@ public class Categoria {
     private long id;
     private String nombre;
 
+    /*
+     * Relación ManyToMany con la entidad Pelicula.
+     * La anotación JoinTable se utiliza para definir la tabla intermedia que contiene las claves foráneas
+     * de las dos entidades que participan en la relación ManyToMany.
+     */
     @ManyToMany(
             mappedBy = "categorias")
     @JsonIgnore
     Set<Pelicula> peliculas = new HashSet<>();
-
-    @Column(name = "ultima_actualizacion")
-    @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
-    private Date ultimaActualizacion;
-
-
 }
