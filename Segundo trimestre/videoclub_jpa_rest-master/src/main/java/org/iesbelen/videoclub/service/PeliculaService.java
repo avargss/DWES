@@ -65,7 +65,7 @@ public class PeliculaService {
         Sort sort = Sort.unsorted();
 
         if (orden != null && !orden.isEmpty()) {
-            // Divide el parámetro 'orden' en columna y dirección
+            // Aquí divido orden en columna y sentido
             String[] parts = orden.split(",");
             if (parts.length == 2) {
                 String columna = parts[0];
@@ -110,7 +110,6 @@ public class PeliculaService {
     }
 
     public Map<String, Object> all(int pagina, int tamanio) {
-
         // Crea el objeto pageable para paginar las peliculas y ordenarlas por idPelicula
         Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("idPelicula").ascending());
 

@@ -29,7 +29,7 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio", "!orden", "!paginado"})
+    @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio", "!orden"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();

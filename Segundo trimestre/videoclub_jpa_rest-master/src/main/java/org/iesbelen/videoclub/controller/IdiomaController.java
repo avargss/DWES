@@ -2,7 +2,9 @@ package org.iesbelen.videoclub.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.videoclub.domain.Idioma;
+import org.iesbelen.videoclub.dto.IdiomaDTO;
 import org.iesbelen.videoclub.service.IdiomaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,17 @@ import java.util.List;
 @RequestMapping("/idiomas")
 public class IdiomaController {
 
-    private final IdiomaService idiomaService;
+    @Autowired
+    private IdiomaService idiomaService;
 
     public IdiomaController(IdiomaService idiomaService) {
         this.idiomaService = idiomaService;
+    }
+
+    // IDIOMA DTO PARA QUE APAREZCAN EL NOMBRE DE LAS PELICULAS QUE HAY EN ESE IDIOMA
+    @GetMapping("/con-peliculas")
+    public List<IdiomaDTO> getAllIdiomasConPeliculas() {
+        return idiomaService.getAllIdiomasConPeliculas();
     }
 
     @GetMapping({"", "/"})
