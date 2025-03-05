@@ -1,8 +1,10 @@
 package org.iesbelen.videoclub.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesbelen.videoclub.domain.Actor;
 import org.iesbelen.videoclub.domain.Categoria;
 import org.iesbelen.videoclub.domain.Pelicula;
+import org.iesbelen.videoclub.service.ActorService;
 import org.iesbelen.videoclub.service.CategoriaService;
 import org.iesbelen.videoclub.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PeliculaController {
     @Autowired
     private CategoriaService categoriaService;
 
+    @Autowired
+    private ActorService actorService;
+
     public PeliculaController(PeliculaService peliculaService) {
         this.peliculaService = peliculaService;
     }
@@ -46,7 +51,7 @@ public class PeliculaController {
             @RequestParam(required = false) String orden) {
 
         // Si no se pasa ningún parámetro 'orden', el valor será null
-        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrdenYPaginado(orden);
+        List<Pelicula> peliculas = peliculaService.obtenerPeliculasOrdenadas(orden);
         return ResponseEntity.ok(peliculas);
     }
 
@@ -73,13 +78,19 @@ public class PeliculaController {
         return ResponseEntity.ok(responseAll);
     }
 
+    @GetMapping(value = "/order")
+    public List<Pelicula> allOrdered() {
+        log.info("Accediendo a todas las películas ordenadas");
+        return this.peliculaService.findAllByOrderByTituloAsc();
+    }
+
 
     @PostMapping({"", "/"})
     public Pelicula newPelicula(@RequestBody Pelicula pelicula) {
         return this.peliculaService.save(pelicula);
     }
 
-    @PostMapping("/{id}/add/{id_categoria}")
+    @PostMapping("/{id}/addCategoria/{id_categoria}")
     public void addCategoriaToPelicula(@PathVariable("id") long id, @PathVariable("id_categoria") long id_categoria) {
 
         Categoria categoriaNueva = categoriaService.one(id_categoria); // Me encuentra la categoria
@@ -90,7 +101,21 @@ public class PeliculaController {
 
         this.peliculaService.replace(id, pelicula);
         this.categoriaService.replace(id_categoria, categoriaNueva);
+    }
 
+    @PostMapping("/{id}/addActor/{id_actor}")
+    public Pelicula addActorToPelicula(@PathVariable("id") long id, @PathVariable("id_actor") long id_actor) {
+
+        Actor nuevoActor = actorService.one(id_actor); // Me encuentra el actor
+        Pelicula pelicula = peliculaService.one(id); // Me encuentra la pelicula
+
+        pelicula.getActores().add(nuevoActor);
+        nuevoActor.getPeliculas().add(pelicula);
+
+        this.peliculaService.replace(id, pelicula);
+        this.actorService.replace(id_actor, nuevoActor);
+
+        return null;
     }
 
 

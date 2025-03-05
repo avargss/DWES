@@ -29,6 +29,11 @@ public class ActorController {
         return this.actorService.one(id);
     }
 
+    @GetMapping("/{id}/numPeliculas")
+    public int numPeliculas(@PathVariable("id") Long id) {
+        return this.actorService.one(id).getPeliculas().size();
+    }
+
     @PostMapping({"", "/"})
     public Actor newActor(@RequestBody Actor actor) {
         return this.actorService.save(actor);
@@ -45,4 +50,5 @@ public class ActorController {
     public void deleteActor(@PathVariable("id") Long id) {
         this.actorService.delete(id);
     }
+
 }

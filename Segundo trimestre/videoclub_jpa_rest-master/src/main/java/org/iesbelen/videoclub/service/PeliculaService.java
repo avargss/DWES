@@ -53,7 +53,12 @@ public class PeliculaService {
                 .orElseThrow(() -> new PeliculaNotFoundException(id));
     }
 
-    public List<Pelicula> obtenerPeliculaConOrdenYPaginado(String orden) {
+    public List<Pelicula> findAllByOrderByTituloAsc() {
+        return this.peliculaRepository.findAllByOrderByTituloAsc();
+    }
+
+    // ORDENACION CON UN SOLO PARÁMETRO
+    public List<Pelicula> obtenerPeliculasOrdenadas(String orden) {
 
         // De esta forma, puedo ordenar las peliculas en postman con un solo parámetro orden: columna,sentido (localhost:8080/peliculas?orden=titulo,desc)
         Sort sort = Sort.unsorted();
@@ -101,6 +106,7 @@ public class PeliculaService {
         return peliculaRepository.findAll(sort);*/
     }
 
+    // PAGINACION CON 2 PARÁMETROS
     public Map<String, Object> all(int pagina, int tamanio) {
         // Crea el objeto pageable para paginar las peliculas y ordenarlas por idPelicula
         Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("idPelicula").ascending());
@@ -118,6 +124,7 @@ public class PeliculaService {
         return response;
     }
 
+    // PAGINACION CON 2 PARÁMETROS EN UN ARRAY
     public Map<String, Object> all(String[] paginacion) {
         // Crea el objeto pageable para paginar las peliculas y ordenarlas por idPelicula
         Pageable paginado = PageRequest.of(Integer.parseInt(paginacion[0], 10), Integer.parseInt(paginacion[1], 10), Sort.by("idPelicula").ascending());
