@@ -1,5 +1,6 @@
 package org.iesbelen.videoclub.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -12,7 +13,8 @@ import lombok.*;
 @Embeddable
 public class Address {
 
-    private int idAddress;
+    @Column(name = "address_id")
+    private int id;
 
     private String street;
 

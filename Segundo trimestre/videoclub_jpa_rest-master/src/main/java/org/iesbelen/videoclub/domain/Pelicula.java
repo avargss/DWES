@@ -48,4 +48,11 @@ public class Pelicula {
             inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
     //Una de las dos entidades tiene que tener el jsonignore para que no se vea bucle, si no es esta debe ser Pelicula
     Set<Categoria> categorias = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "pelicula_actor",
+            joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
+            inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"))
+    Set<Actor> actores = new HashSet<>();
 }

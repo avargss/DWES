@@ -1,8 +1,9 @@
-package org.iesbelen.videoclub.repository;
+package org.iesbelen.videoclub.Impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.iesbelen.videoclub.domain.Categoria;
+import org.iesbelen.videoclub.repository.CategoriaCustomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

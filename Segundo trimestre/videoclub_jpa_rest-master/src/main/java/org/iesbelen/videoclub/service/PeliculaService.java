@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +22,6 @@ public class PeliculaService {
 
     public PeliculaService(PeliculaRepository peliculaRepository) {
         this.peliculaRepository = peliculaRepository;
-    }
-
-    public Pelicula findByDuracionLessThan(int cantidad) {
-        return this.peliculaRepository.findByDuracionLessThan(cantidad);
     }
 
     public List<Pelicula> all() {
@@ -58,10 +53,9 @@ public class PeliculaService {
                 .orElseThrow(() -> new PeliculaNotFoundException(id));
     }
 
-    public List<Pelicula> obtenerPeliculaConOrdenYPaginado(String[] orden) {
+    public List<Pelicula> obtenerPeliculaConOrdenYPaginado(String orden) {
 
         // De esta forma, puedo ordenar las peliculas en postman con un solo parámetro orden: columna,sentido (localhost:8080/peliculas?orden=titulo,desc)
-        /*
         Sort sort = Sort.unsorted();
 
         if (orden != null && !orden.isEmpty()) {
@@ -78,10 +72,9 @@ public class PeliculaService {
         }
 
         return peliculaRepository.findAll(sort);
-        */
 
         // De esta forma, ordeno las peliculas en postman con varios parámetros orden: columna,sentido (localhost:8080/peliculas?orden=titulo,desc&orden=duracion,asc)
-        List<Sort.Order> ordenes = new ArrayList<>();
+        /*List<Sort.Order> ordenes = new ArrayList<>();
 
         // Si no se pasa ningún parámetro 'orden', no se aplica ningún orden
         if (orden != null) {
@@ -105,13 +98,29 @@ public class PeliculaService {
         // Si hay criterios de orden se crea un objeto Sort
         Sort sort = ordenes.isEmpty() ? Sort.unsorted() : Sort.by(ordenes);
 
-        return peliculaRepository.findAll(sort);
-
+        return peliculaRepository.findAll(sort);*/
     }
 
     public Map<String, Object> all(int pagina, int tamanio) {
         // Crea el objeto pageable para paginar las peliculas y ordenarlas por idPelicula
         Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("idPelicula").ascending());
+
+        Page<Pelicula> pageAll = this.peliculaRepository.findAll(paginado);
+
+        Map<String, Object> response = new HashMap<>();
+
+        // Aparte del resultado de la consulta, se añaden otros datos útiles para la paginación
+        response.put("peliculas", pageAll.getContent());
+        response.put("currentPage", pageAll.getNumber());
+        response.put("totalItems", pageAll.getTotalElements());
+        response.put("totalPages", pageAll.getTotalPages());
+
+        return response;
+    }
+
+    public Map<String, Object> all(String[] paginacion) {
+        // Crea el objeto pageable para paginar las peliculas y ordenarlas por idPelicula
+        Pageable paginado = PageRequest.of(Integer.parseInt(paginacion[0], 10), Integer.parseInt(paginacion[1], 10), Sort.by("idPelicula").ascending());
 
         Page<Pelicula> pageAll = this.peliculaRepository.findAll(paginado);
 

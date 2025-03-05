@@ -29,13 +29,29 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!paginacion", "!orden", "!pagina", "!tamanio"})
+    @GetMapping(value = {"", "/"}, params = {"!paginacion", "!orden", "!pagina", "!tamanio"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
-    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!paginacion", "!orden"})
+    @GetMapping("/{id}")
+    public Pelicula one(@PathVariable("id") Long id) {
+        return this.peliculaService.one(id);
+    }
+
+    // PARA QUE ME ORDENE LAS PELICULAS POR COLUMNA, SENTIDO (localhost:8080/peliculas?orden=idPelicula,desc)
+    @GetMapping(value = {"", "/"}, params = {"!paginacion", "!tamanio"})
+    public ResponseEntity<List<Pelicula>> obtenerPeliculas(
+            @RequestParam(required = false) String orden) {
+
+        // Si no se pasa ningún parámetro 'orden', el valor será null
+        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrdenYPaginado(orden);
+        return ResponseEntity.ok(peliculas);
+    }
+
+    // PARA QUE ME PAGINE USANDO PAGINA Y TAMANIO (localhost:8080/peliculas?pagina=0&tamanio=5)
+    @GetMapping(value = {"", "/"}, params = {"!paginacion", "!orden"})
     public ResponseEntity<Map<String, Object>> all(
             @RequestParam(value = "pagina", defaultValue = "0") int pagina,
             @RequestParam(value = "tamanio", defaultValue = "0") int tamanio) {
@@ -46,10 +62,10 @@ public class PeliculaController {
         return ResponseEntity.ok(responseAll);
     }
 
-    // No se si es necesario este método pero ahí se queda por si acaso
-    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!pagina", "!tamanio"})
+    // PARA QUE ME HAGA LA PAGINACION CON UN SOLO PARAMETRO PAGINACION (http://localhost:8080/peliculas?paginacion=0,2)
+    @GetMapping(value = {"", "/"}, params = {"!orden", "!pagina", "!tamanio"})
     public ResponseEntity<Map<String, Object>> all(
-            @RequestParam(value = "paginacion", defaultValue = "0") String[] paginacion) {
+            @RequestParam(value = "paginacion", defaultValue = "0, 10") String[] paginacion) {
 
         log.info("Accediendo a todas las peliculas con paginación");
 
@@ -57,14 +73,6 @@ public class PeliculaController {
         return ResponseEntity.ok(responseAll);
     }
 
-    @GetMapping(value = {"", "/"}, params = {"orden"})
-    public ResponseEntity<List<Pelicula>> obtenerPeliculas(
-            @RequestParam(required = false) String[] orden) {
-
-        // Si no se pasa ningún parámetro 'orden', el valor será null
-        List<Pelicula> peliculas = peliculaService.obtenerPeliculaConOrdenYPaginado(orden);
-        return ResponseEntity.ok(peliculas);
-    }
 
     @PostMapping({"", "/"})
     public Pelicula newPelicula(@RequestBody Pelicula pelicula) {
@@ -85,10 +93,6 @@ public class PeliculaController {
 
     }
 
-    @GetMapping("/{id}")
-    public Pelicula one(@PathVariable("id") Long id) {
-        return this.peliculaService.one(id);
-    }
 
     @PutMapping("/{id}")
     public Pelicula replacePelicula(@PathVariable("id") Long id, @RequestBody Pelicula pelicula) {
