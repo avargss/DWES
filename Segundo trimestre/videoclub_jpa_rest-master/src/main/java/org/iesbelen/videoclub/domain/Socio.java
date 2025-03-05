@@ -1,6 +1,5 @@
 package org.iesbelen.videoclub.domain;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;

@@ -1,6 +1,5 @@
 package org.iesbelen.videoclub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,20 +11,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class Tarjeta {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tarjeta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date caducidad;
 
-    @OneToOne
-    @JoinColumn(name = "id_tarjeta", foreignKey = @ForeignKey(name = "FK_SOCIO"))
-    @MapsId
-    @JsonIgnore
-    @ToString.Exclude
+    @OneToOne(mappedBy = "tarjeta")
     private Socio socio;
 }

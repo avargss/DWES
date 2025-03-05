@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -17,12 +18,16 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+// Si quiero que la colección Set<Pelicula> funcione en Categoria debo tener esto
+@EqualsAndHashCode(of = "idPelicula")
+
 public class Pelicula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_pelicula")
-    private long idPelicula;
+    private long idPelicula; // EqualsAndHashCode pilla el campo idPelicula
 
     private String titulo;
 
@@ -43,11 +48,11 @@ public class Pelicula {
      * La anotación JoinTable se utiliza para definir la tabla intermedia que contiene las claves foráneas
      * de las dos entidades que participan en la relación ManyToMany.
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pelicula_categoria",
             joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
             inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
-    Set<Categoria> categorias = new HashSet<>();
+    Set<Categoria> categorias;
 
 }

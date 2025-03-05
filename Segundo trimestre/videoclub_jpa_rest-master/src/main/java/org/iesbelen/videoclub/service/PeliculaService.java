@@ -60,7 +60,7 @@ public class PeliculaService {
 
     public List<Pelicula> obtenerPeliculaConOrdenYPaginado(String[] orden) {
 
-        // De esta forma, puedo ordenar las peliculas en postman con un solo parámetro orden: columna, sentido (localhost:8080/peliculas?orden=titulo,desc)
+        // De esta forma, puedo ordenar las peliculas en postman con un solo parámetro orden: columna,sentido (localhost:8080/peliculas?orden=titulo,desc)
         /*
         Sort sort = Sort.unsorted();
 
@@ -80,7 +80,7 @@ public class PeliculaService {
         return peliculaRepository.findAll(sort);
         */
 
-        // De esta forma, ordeno las peliculas en postman con varios parámetros orden: columna, sentido (localhost:8080/peliculas?orden=titulo,desc&orden=duracion,asc)
+        // De esta forma, ordeno las peliculas en postman con varios parámetros orden: columna,sentido (localhost:8080/peliculas?orden=titulo,desc&orden=duracion,asc)
         List<Sort.Order> ordenes = new ArrayList<>();
 
         // Si no se pasa ningún parámetro 'orden', no se aplica ningún orden
@@ -126,8 +126,4 @@ public class PeliculaService {
         return response;
     }
 
-    public Map<String, Object> all(String[] paginacion) {
-
-        return all(Integer.parseInt(paginacion[0]), Integer.parseInt(paginacion[1]));
-    }
 }
