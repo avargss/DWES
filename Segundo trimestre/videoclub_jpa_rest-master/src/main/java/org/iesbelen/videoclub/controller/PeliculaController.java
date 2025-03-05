@@ -29,13 +29,13 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping(value = {"", "/"}, params = {"!pagina", "!tamanio", "!orden"})
+    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!paginacion", "!orden", "!pagina", "!tamanio"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
-    @GetMapping(value = {"", "/"}, params = {"pagina", "tamanio"})
+    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!paginacion", "!orden"})
     public ResponseEntity<Map<String, Object>> all(
             @RequestParam(value = "pagina", defaultValue = "0") int pagina,
             @RequestParam(value = "tamanio", defaultValue = "0") int tamanio) {
@@ -43,6 +43,17 @@ public class PeliculaController {
         log.info("Accediendo a todas las peliculas con paginación");
 
         Map<String, Object> responseAll = this.peliculaService.all(pagina, tamanio);
+        return ResponseEntity.ok(responseAll);
+    }
+
+    // No se si es necesario este método pero ahí se queda por si acaso
+    @GetMapping(value = {"", "/"}, params = {"!buscar", "!ordenar", "!pagina", "!tamanio"})
+    public ResponseEntity<Map<String, Object>> all(
+            @RequestParam(value = "paginacion", defaultValue = "0") String[] paginacion) {
+
+        log.info("Accediendo a todas las peliculas con paginación");
+
+        Map<String, Object> responseAll = this.peliculaService.all(paginacion);
         return ResponseEntity.ok(responseAll);
     }
 
